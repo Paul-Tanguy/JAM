@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 
         music = MediaPlayer.create(MainActivity.this, R.raw.music);
         music.start();
+        music.setLooping(true);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
        // setContentView(R.layout.activity_main); // ça met en jaune et tout mais a faire bouger le perso
