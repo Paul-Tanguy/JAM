@@ -4,17 +4,28 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread gameThread;
     private ChibiCharacter chibi1;
+    private int backgroundColor;
+    private static final Sensor NULL = null;
+    private SensorManager sensorManager;
+    private Sensor gyroscopeSensor;
+    private SensorEventListener gyroscopteEventListener;
+
 
     public GameSurface(Context context) {
         super(context);
         this.setFocusable(true);
         this.getHolder().addCallback(this);
+
     }
 
     public void update() {
@@ -24,6 +35,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawColor(0xFFFFFFFF);
         this.chibi1.draw(canvas);
     }
 

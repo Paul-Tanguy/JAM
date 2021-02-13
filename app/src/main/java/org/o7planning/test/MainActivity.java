@@ -14,10 +14,6 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    private static final Sensor NULL = null;
-    private SensorManager sensorManager;
-    private Sensor gyroscopeSensor;
-    private SensorEventListener gyroscopteEventListener;
     MediaPlayer music;
 
     @Override
@@ -28,8 +24,7 @@ public class MainActivity extends Activity {
         music.start();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //this.setContentView(new GameSurface(this));
-        setContentView(R.layout.activity_main); // ça met en jaune et tout mais a faire bouger le perso
+       // setContentView(R.layout.activity_main); // ça met en jaune et tout mais a faire bouger le perso
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
@@ -37,6 +32,8 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "The device has no Gyroscope !", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        this.setContentView(new GameSurface(this));
 
         gyroscopteEventListener = new SensorEventListener() {
             @Override
