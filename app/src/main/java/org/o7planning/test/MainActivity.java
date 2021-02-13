@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,11 +18,14 @@ public class MainActivity extends Activity {
     private SensorManager sensorManager;
     private Sensor gyroscopeSensor;
     private SensorEventListener gyroscopteEventListener;
+    MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        music = MediaPlayer.create(MainActivity.this, R.raw.music);
+        music.start();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //this.setContentView(new GameSurface(this));
@@ -60,6 +64,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        music.release();
         sensorManager.unregisterListener(gyroscopteEventListener);
     }
 }
