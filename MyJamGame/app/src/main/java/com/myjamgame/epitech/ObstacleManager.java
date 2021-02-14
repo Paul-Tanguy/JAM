@@ -15,6 +15,8 @@ public class ObstacleManager {
     private int obstacleHeight;
     private int color;
 
+    private int wallState;
+
     private long startTime;
     private long initTime;
 
@@ -26,12 +28,17 @@ public class ObstacleManager {
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.color = color;
+        this.wallState = 0;
 
         startTime = initTime = System.currentTimeMillis();
 
         obstacles = new ArrayList<>();
 
         populateObstacles();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public boolean playerCollide(RectPlayer player) {
@@ -46,13 +53,13 @@ public class ObstacleManager {
         int currY = -5*Constants.SCREEN_HEIGHT/4;
         while(currY < 0) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(new Obstacle(context, obstacleHeight, color, xStart, currY, playerGap));
+            obstacles.add(new Obstacle(context, obstacleHeight, color, xStart, currY, playerGap, 0));
             currY += obstacleHeight + obstacleGap;
         }
     }
 
     public void update() {
-        if(startTime < Constants.INIT_TIME)
+        if (startTime < Constants.INIT_TIME)
             startTime = Constants.INIT_TIME;
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
@@ -60,9 +67,9 @@ public class ObstacleManager {
         for(Obstacle ob : obstacles) {
             ob.incrementY(speed * elapsedTime);
         }
-        if(obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+        if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(context, obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
+            obstacles.add(0, new Obstacle(context, obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap, score));
             obstacles.remove(obstacles.size() - 1);
             score++;
         }

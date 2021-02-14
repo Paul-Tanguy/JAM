@@ -7,6 +7,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class GameplayScene implements Scene {
     private Context context;
@@ -32,7 +36,7 @@ public class GameplayScene implements Scene {
         player.update(playerPoint);
         this.background = new Background(context);
 
-        obstacleManager = new ObstacleManager(context, 200, 350, 75, Color.BLACK);
+        obstacleManager = new ObstacleManager(context, 300, 700, 100, Color.BLACK);
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -42,7 +46,8 @@ public class GameplayScene implements Scene {
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(context, 200, 350, 75, Color.BLACK);
+        obstacleManager = new ObstacleManager(context, 300, 700, 100, Color.BLACK);
+        background = new Background(context);
         movingPlayer = false;
     }
 
@@ -86,6 +91,26 @@ public class GameplayScene implements Scene {
             paint.setTextSize(100);
             paint.setColor(Color.MAGENTA);
             drawCenterText(canvas, paint, "Game Over");
+            Button btnShow = new Button(context);
+            int state = obstacleManager.getScore() / 26;
+            String text = "Restart Game";
+            if (state == 0) {
+                text += "\nCitation past";
+            } else if (state == 1) {
+                text += "\nCitation Present";
+            } else {
+                text += "\nCitation Future";
+            }
+            btnShow.setText(text);
+            btnShow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            btnShow.draw(canvas);
+            btnShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    gameOver = false;
+                    reset();
+                }
+            });
         }
     }
 
@@ -120,7 +145,7 @@ public class GameplayScene implements Scene {
             obstacleManager.update();
             background.update();
 
-            if(obstacleManager.playerCollide(player)) {
+            if(obstacleManager.playerCollide(player) || obstacleManager.getScore() >= 160) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
             }

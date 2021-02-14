@@ -54,6 +54,7 @@ public class Obstacle implements GameObject{
 public class Obstacle implements GameObject{
     private Rect rectangle;
     private Rect rectangle2;
+    private Rect sub;
     private Bitmap wall;
     private Bitmap wall2;
     private Context context;
@@ -66,13 +67,15 @@ public class Obstacle implements GameObject{
         rectangle2.bottom += y;
     }
 
-    public Obstacle(Context context, int rectHeight, int color, int startX, int startY, int playerGap) {
+    public Obstacle(Context context, int rectHeight, int color, int startX, int startY, int playerGap, int score) {
         this.context = context;
-        wall = BitmapFactory.decodeResource(context.getResources(), R.drawable.jeremy);
-        wall2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.jeremy);
+        wall = BitmapFactory.decodeResource(context.getResources(), R.drawable.walls);
+        wall2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.walls);
         this.color = color;
         rectangle = new Rect(0, startY, startX, startY + rectHeight);
         rectangle2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
+        int top = (5 - ((int) score / 26)) * wall.getHeight() / 6;
+        this.sub = new Rect(0, top, wall.getWidth(),  top + wall.getHeight() / 6);
     }
 
     public Rect getRectangle(){
@@ -95,9 +98,9 @@ public class Obstacle implements GameObject{
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(color);
-        canvas.drawRect(rectangle, paint);
-        canvas.drawRect(rectangle2, paint);
-        canvas.drawBitmap(wall, null, rectangle, paint);
-        canvas.drawBitmap(wall2, null, rectangle2, paint);
+        //canvas.drawRect(rectangle, paint);
+        //canvas.drawRect(rectangle2, paint);
+        canvas.drawBitmap(wall, sub, rectangle, null);
+        canvas.drawBitmap(wall2, sub, rectangle2, null);
     }
 }
