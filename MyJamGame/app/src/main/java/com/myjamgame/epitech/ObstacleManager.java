@@ -81,6 +81,6 @@ public class ObstacleManager {
         Paint paint = new Paint();
         paint.setTextSize(100);
         paint.setColor(Color.MAGENTA);
-        canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent(), paint);
+        canvas.drawText("" + (score * 2 + 1840), 50, 50 + paint.descent() - paint.ascent(), paint);
     }
 }
