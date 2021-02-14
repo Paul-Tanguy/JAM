@@ -53,7 +53,7 @@ public class ObstacleManager {
         int currY = -5*Constants.SCREEN_HEIGHT/4;
         while(currY < 0) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(new Obstacle(context, obstacleHeight, color, xStart, currY, playerGap, 0));
+            obstacles.add(new Obstacle(context, obstacleHeight, color, xStart, currY, playerGap));
             currY += obstacleHeight + obstacleGap;
         }
     }
@@ -69,7 +69,7 @@ public class ObstacleManager {
         }
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(context, obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap, score));
+            obstacles.add(0, new Obstacle(context, obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
             score++;
         }

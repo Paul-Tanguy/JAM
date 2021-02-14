@@ -25,8 +25,8 @@ public class Background implements GameObject {
 
     @Override
     public void update() {
-        this.sub.top -= 7;
-        this.sub.bottom -= 7;
+        this.sub.top -= 7.1;
+        this.sub.bottom -= 7.1;
     }
 
     @Override
