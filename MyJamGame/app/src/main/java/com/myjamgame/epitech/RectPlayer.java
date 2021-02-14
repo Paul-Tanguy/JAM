@@ -17,7 +17,6 @@ public class RectPlayer implements GameObject {
     private Animation walkRight;
     private Animation walkLeft;
     private AnimationManager animManager;
-
     public Rect getRectangle() {
         return rectangle;
     }
@@ -32,6 +31,7 @@ public class RectPlayer implements GameObject {
         Bitmap walk2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.jeremy);
 
         idle = new Animation(new Bitmap[]{idleImg}, 2);
+
         walkRight = new Animation(new Bitmap[]{walk1, walk2}, 0.5f);
 
         Matrix m = new Matrix();
