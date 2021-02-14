@@ -1,5 +1,6 @@
 package com.myjamgame.epitech;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -7,6 +8,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 public class ObstacleManager {
     //higher index = lower on screen = higher y value
+    private Context context;
     private ArrayList<Obstacle> obstacles;
     private int playerGap;
     private int obstacleGap;
@@ -18,7 +20,8 @@ public class ObstacleManager {
 
     private int score = 0;
 
-    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
+    public ObstacleManager(Context context, int playerGap, int obstacleGap, int obstacleHeight, int color) {
+        this.context = context;
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
@@ -43,7 +46,7 @@ public class ObstacleManager {
         int currY = -5*Constants.SCREEN_HEIGHT/4;
         while(currY < 0) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(new Obstacle(obstacleHeight, color, xStart, currY, playerGap));
+            obstacles.add(new Obstacle(context, obstacleHeight, color, xStart, currY, playerGap));
             currY += obstacleHeight + obstacleGap;
         }
     }
@@ -59,7 +62,7 @@ public class ObstacleManager {
         }
         if(obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
+            obstacles.add(0, new Obstacle(context, obstacleHeight, color, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
             score++;
         }

@@ -1,5 +1,6 @@
 package com.myjamgame.epitech;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,7 +9,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 public class GameplayScene implements Scene {
-
+    private Context context;
     private Rect r = new Rect();
 
     private RectPlayer player;
@@ -23,12 +24,13 @@ public class GameplayScene implements Scene {
     private OrientationData orientationData;
     private long frameTime;
 
-    public GameplayScene() {
+    public GameplayScene(Context context) {
+        this.context = context;
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
+        obstacleManager = new ObstacleManager(context, 200, 350, 75, Color.BLACK);
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -38,7 +40,7 @@ public class GameplayScene implements Scene {
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
+        obstacleManager = new ObstacleManager(context, 200, 350, 75, Color.BLACK);
         movingPlayer = false;
     }
 
